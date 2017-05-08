@@ -10,7 +10,6 @@ RUN apt-get update \
     git \
     ssh \
     vim \
- && rm -rf /var/lib/apt/lists/* \
  && curl -sSL -O https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}-ce.tgz \
  && tar -xzf docker-${DOCKER_VERSION}-ce.tgz \
  && mv docker/docker /usr/local/bin \
