@@ -10,14 +10,18 @@ RUN apt-get update \
     iputils-ping \
     git \
     ssh \
-    vim \
- && curl -sSL -O https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}-ce.tgz \
- && tar -xzf docker-${DOCKER_VERSION}-ce.tgz \
- && mv docker/docker /usr/local/bin \
- && rm -r docker* \
- && curl -sSL -o /usr/local/bin/docker-compose \
-    https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-Linux-x86_64 \
- && chmod +x /usr/local/bin/docker-compose
+    vim
+RUN set -x \
+ && curl -fSL "https://get.docker.com/builds/`uname -s`/`uname -m`/docker-${DOCKER_VERSION}.tgz" -o docker.tgz \
+ && tar -xzvf docker.tgz \
+ && mv docker/* /usr/local/bin/ \
+ && rmdir docker \
+ && rm docker.tgz \
+ && docker -v
+RUN set -x \
+ && curl -fSL "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-compose \
+ && chmod +x /usr/local/bin/docker-compose \
+ && docker-compose -v
 WORKDIR /root
 RUN git config --global user.email ${GIT_EMAIL:-'jdharmon@sentara.com'} \
  && git config --global user.name ${GIT_NAME:-'Jason Harmon'}
