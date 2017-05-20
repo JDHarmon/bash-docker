@@ -12,7 +12,7 @@ RUN apt-get update \
     ssh \
     vim
 RUN set -x \
- && curl -fSL "https://get.docker.com/builds/`uname -s`/`uname -m`/docker-${DOCKER_VERSION}.tgz" -o docker.tgz \
+ && curl -fSL "https://get.docker.com/builds/`uname -s`/`uname -m`/docker-${DOCKER_VERSION}-ce.tgz" -o docker.tgz \
  && tar -xzvf docker.tgz \
  && mv docker/* /usr/local/bin/ \
  && rmdir docker \
@@ -23,5 +23,7 @@ RUN set -x \
  && chmod +x /usr/local/bin/docker-compose \
  && docker-compose -v
 WORKDIR /root
+COPY root/ /root
+ENV TERM=xterm-256color
 RUN git config --global user.email ${GIT_EMAIL:-'jdharmon@sentara.com'} \
  && git config --global user.name ${GIT_NAME:-'Jason Harmon'}
