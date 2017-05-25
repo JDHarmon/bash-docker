@@ -21,7 +21,7 @@ RUN set -x \
  && rm -rf docker \
  && rm docker.tgz \
  && docker -v
-RUN pip install docker-compose
+RUN pip install docker-compose \
  && docker-compose -v
 ENV TERM=xterm-256color
 RUN git config --global user.email ${GIT_EMAIL:-'jdharmon@sentara.com'} \
