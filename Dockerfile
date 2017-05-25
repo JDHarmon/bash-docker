@@ -10,20 +10,19 @@ RUN apk update \
     curl \
     git \
     openssh-client \
+	py-pip \
     vim
-RUN set -x \
- && curl -fSL "https://get.docker.com/builds/`uname -s`/`uname -m`/docker-${DOCKER_VERSION}-ce.tgz" -o docker.tgz \
- && tar -xzvf docker.tgz \
- && mv docker/* /usr/local/bin/ \
- && rmdir docker \
- && rm docker.tgz \
- && docker -v
-RUN set -x \
- && curl -fSL "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-compose \
- && chmod +x /usr/local/bin/docker-compose \
- && docker-compose -v
 WORKDIR /root
 COPY root/ /root
+RUN set -x \
+ && curl -fSL --insecure "https://get.docker.com/builds/`uname -s`/`uname -m`/docker-${DOCKER_VERSION}-ce.tgz" -o docker.tgz \
+ && tar -xzvf docker.tgz \
+ && mv docker/docker /usr/local/bin/ \
+ && rm -rf docker \
+ && rm docker.tgz \
+ && docker -v
+RUN pip install docker-compose
+ && docker-compose -v
 ENV TERM=xterm-256color
 RUN git config --global user.email ${GIT_EMAIL:-'jdharmon@sentara.com'} \
  && git config --global user.name ${GIT_NAME:-'Jason Harmon'}
