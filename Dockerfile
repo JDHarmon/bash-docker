@@ -21,6 +21,7 @@ RUN set -x \
  && rm docker.tgz \
  && docker -v
 ENV TERM=xterm-256color
-RUN git config --global user.email ${GIT_EMAIL:-'jdharmon@sentara.com'} \
+RUN git config --global http.sslCAInfo ~/ca-bundle.crt \
+ && git config --global user.email ${GIT_EMAIL:-'jdharmon@sentara.com'} \
  && git config --global user.name ${GIT_NAME:-'Jason Harmon'}
 CMD ["/bin/bash"]
