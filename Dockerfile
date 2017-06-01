@@ -9,6 +9,7 @@ RUN apk update \
     ca-certificates \
     curl \
     git \
+    less \
     openssh-client \
     vim
 WORKDIR /root
