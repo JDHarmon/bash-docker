@@ -7,6 +7,7 @@ RUN apk update \
  && apk add  \
     bash \
     ca-certificates \
+    coreutils \
     curl \
     git \
     less \
