@@ -32,8 +32,10 @@ RUN set -x \
  && docker -v \
  && curl -sSL "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m`" -o /usr/local/bin/docker-compose \
  && chmod +x /usr/local/bin/docker-compose \
- && docker-compose -v 
- 
+ && docker-compose -v \
+ && curl -sSL https://github.com/docker/cli/raw/master/contrib/completion/bash/docker -o /usr/share/bash-completion/completions/docker \
+ && curl -sSL https://github.com/docker/compose/raw/master/contrib/completion/bash/docker-compose -o /usr/share/bash-completion/completions/docker-compose
+
 RUN git config --global user.email ${GIT_EMAIL:-'jdharmon@sentara.com'} \
  && git config --global user.name ${GIT_NAME:-'Jason Harmon'}
 
