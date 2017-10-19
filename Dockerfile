@@ -24,7 +24,7 @@ RUN set -x \
  && curl -sSL -O "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk" \
  && apk add glibc-${GLIBC_VERSION}.apk glibc-bin-${GLIBC_VERSION}.apk \
  && rm glibc*.apk \
- && curl -sSL "https://get.docker.com/builds/`uname -s`/`uname -m`/docker-${DOCKER_VERSION}-ce.tgz" -o docker.tgz \
+ && curl -sSL "https://download.docker.com/linux/static/stable/$(uname -m)/docker-$DOCKER_VERSION-ce.tgz" -o docker.tgz \
  && tar -xzvf docker.tgz \
  && mv docker/docker /usr/local/bin/ \
  && rm -rf docker \
