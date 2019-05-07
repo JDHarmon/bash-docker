@@ -1,6 +1,6 @@
 FROM alpine
 
-ENV DOCKER_VERSION=17.09.0 DOCKER_COMPOSE_VERSION=1.16.1 GLIBC_VERSION=2.25-r0
+ENV DOCKER_VERSION=18.09.6 DOCKER_COMPOSE_VERSION=1.24.0 GLIBC_VERSION=2.29-r0
 
 COPY ca-certificates /usr/local/share/ca-certificates/
 RUN apk update \
@@ -19,12 +19,12 @@ COPY root/ /root
 
 # Install glibc, Docker, and Docker Compose
 RUN set -x \
- && curl -sSL -o /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub \
+ && curl -sSL -o /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub \
  && curl -sSL -O "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" \
  && curl -sSL -O "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk" \
  && apk add glibc-${GLIBC_VERSION}.apk glibc-bin-${GLIBC_VERSION}.apk \
  && rm glibc*.apk \
- && curl -sSL "https://download.docker.com/linux/static/stable/$(uname -m)/docker-$DOCKER_VERSION-ce.tgz" -o docker.tgz \
+ && curl -sSL "https://download.docker.com/linux/static/stable/$(uname -m)/docker-$DOCKER_VERSION.tgz" -o docker.tgz \
  && tar -xzvf docker.tgz \
  && mv docker/docker /usr/local/bin/ \
  && rm -rf docker \
@@ -35,8 +35,5 @@ RUN set -x \
  && docker-compose -v \
  && curl -sSL https://github.com/docker/cli/raw/master/contrib/completion/bash/docker -o /usr/share/bash-completion/completions/docker \
  && curl -sSL https://github.com/docker/compose/raw/master/contrib/completion/bash/docker-compose -o /usr/share/bash-completion/completions/docker-compose
-
-RUN git config --global user.email ${GIT_EMAIL:-'jdharmon@sentara.com'} \
- && git config --global user.name ${GIT_NAME:-'Jason Harmon'}
 
 CMD ["/bin/bash"]

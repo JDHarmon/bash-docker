@@ -1,0 +1,16 @@
+[user] 
+	name = Jason Harmon 
+	email = jason@jdharmon.com
+[core] 
+	autocrlf = input 
+	editor = vim
+[alias] 
+	ls = log --oneline --graph 
+	ll = log --graph --stat 
+	history = log --graph --pretty=format:'%C(auto)%h%Creset -%C(auto)%d%Creset %s %Cgreen%ad (%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short 
+	push-tag = !git push origin && git push origin tag $(git tag --points-at HEAD) 
+	push-branch = !git push -u origin $(git rev-parse --abbrev-ref HEAD) 
+	hub = !hub
+	release-notes = !git log $(git describe --tags --abbrev=0)..HEAD --format='* %s'
+	vdiff = difftool --tool=vimdiff
+	prune-branch = !git fetch --prune && git branch -v | grep '\\[gone\\]' | awk '{print $1}' | xargs git branch -d
